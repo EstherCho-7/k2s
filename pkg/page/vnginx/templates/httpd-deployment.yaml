@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-httpd-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: httpd
+  template:
+    metadata:
+      labels:
+        app: httpd
+    spec:
+      containers:
+        - name: httpd
+          image: "{{ .Values.httpd.image.repository }}:{{ .Values.httpd.image.tag }}"
+          ports:
+          - containerPort: 80
+          resources:
+            requests:
+              cpu: 0.1m
+              memory: 1Mi
+            limits:
+              cpu: 1m
+              memory: 7Mi
+
+
